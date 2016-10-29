@@ -9,3 +9,7 @@
   )
   (reverse-number-iter n 0)
 )
+
+(define (palindrome? n)
+  (= n (reverse-number n))
+)
