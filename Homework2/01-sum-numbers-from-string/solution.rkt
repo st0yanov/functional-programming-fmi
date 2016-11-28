@@ -18,8 +18,10 @@
     )
   )
 
-  (sum-numbers-iter str (string-length str) '() 0)
+  (sum-numbers-iter (string-append " " str) (+ (string-length str) 1) '() 0)
 )
 
 (sum-numbers "a123b2c56") ;→ 181
+(sum-numbers "123b2c56")
+(sum-numbers "1234  1")
 (sum-numbers "a1b2c3") ;→ 6
