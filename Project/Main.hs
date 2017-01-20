@@ -1,5 +1,6 @@
 module Main where
 
+import System.IO
 import TicTacToe
 
 main :: IO ()

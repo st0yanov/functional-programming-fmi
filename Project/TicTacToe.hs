@@ -119,25 +119,25 @@ playBlock board = playMove board (head losePositions) (Left O)
   where
     losePositions = filter (\x -> checkWin (playMove board x (Left X))) (availableMoves board)
 
-checkFork :: Board -> Bool
-checkFork board = (length possibleWins) == 2
+checkFork :: Board -> Cell -> Bool
+checkFork board symbol = (length possibleWins) == 2
   where
-    possibleWins = filter (\x -> checkWin (playMove board x (Left O))) (availableMoves board)
+    possibleWins = filter (\x -> checkWin (playMove board x symbol)) (availableMoves board)
 
 canFork :: Board -> Cell -> Bool
 canFork board symbol = or forks
   where
-    forks = map (\x -> checkFork (playMove board x symbol)) (availableMoves board)
+    forks = map (\x -> checkFork (playMove board x symbol) symbol) (availableMoves board)
 
 playFork :: Board -> Board
 playFork board = playMove board (head forkPositions) (Left O)
   where
-    forkPositions = filter (\x -> checkFork (playMove board x (Left O))) (availableMoves board)
+    forkPositions = filter (\x -> checkFork (playMove board x (Left O)) (Left O)) (availableMoves board)
 
 playBlockFork :: Board -> Board
 playBlockFork board = playMove board (head forkPositions) (Left O)
   where
-    forkPositions = filter (\x -> checkFork (playMove board x (Left X))) (availableMoves board)
+    forkPositions = filter (\x -> checkFork (playMove board x (Left X)) (Left X)) (availableMoves board)
 
 isCenterEmpty :: Board -> Bool
 isCenterEmpty board@(Board [_, _, _] [_, center, _] [_, _, _])
@@ -199,7 +199,7 @@ bestMoveAI board
   | (canWin board (Left O)) == True = playWin board
   | (canAILose board) == True = playBlock board
   | (canFork board (Left O)) == True = playFork board
-  | (canFork board (Left X)) == True = playBlockFork board
+  | (canFork board (Left X)) == True = playEmptySide board
   | (isCenterEmpty board) == True = playCenter board
   | (canCorner board) == True = playOppositeCorner board
   | (hasEmptyCorner board) == True = playEmptyCorner board
