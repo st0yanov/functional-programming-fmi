@@ -4,7 +4,8 @@ import TicTacToe
 
 main :: IO ()
 main = do
-  putStrLn "Tic-Tac-Toe"
-  putStrLn "Haskell Project @ FMI"
-  putStrLn "-----------------------------"
+  print "Tic-Tac-Toe"
+  print "Haskell Project @ FMI"
+  print "-----------------------------"
 
+  print createEmptyBoard
